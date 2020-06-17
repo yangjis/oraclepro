@@ -53,7 +53,12 @@ public class PhoneDao {
 		try {
 
 			String query = "";
-			query = " select person_id, " + "        name, " + "        hp, " + "        company " + " from person ";
+			query = " select person_id, " + 
+					"        name, " + 
+					"        hp, " +
+					"        company " + 
+					" from person  "+
+					"order by person_id asc";
 
 			pstmt = conn.prepareStatement(query);
 
@@ -86,7 +91,8 @@ public class PhoneDao {
 		    " from person "+
 		    " where name like ? "+
 		    " or hp like ? "+
-		    " or company like ? ";
+		    " or company like ? "+
+		    " order by person_id asc";
 		    
 		    pstmt = conn.prepareStatement(query);
 		    
