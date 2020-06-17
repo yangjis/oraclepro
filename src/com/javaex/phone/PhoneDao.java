@@ -49,39 +49,7 @@ public class PhoneDao {
 		}
 	}
 
-	public List<PersonVo> select() {
-		connect();
-		try {
-
-			String query = "";
-			query = " select person_id, " + 
-					"        name, " + 
-					"        hp, " +
-					"        company " + 
-					" from person  "+
-					"order by person_id asc";
-
-			pstmt = conn.prepareStatement(query);
-			
-			pList.removeAll(pList);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				int person_id = rs.getInt("person_id");
-				String name = rs.getString("name");
-				String hp = rs.getString("hp");
-				String company = rs.getString("company");
-
-				pList.add(new PersonVo(person_id, name, hp, company));
-			}
-
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-		close();
-		return pList;
-	}
-
-	public List<PersonVo> search(String keyword) {
+	public List<PersonVo> select(String keyword) {
 		connect();
 		try {
 		    String query ="";
