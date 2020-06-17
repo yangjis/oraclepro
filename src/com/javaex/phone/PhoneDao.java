@@ -171,6 +171,7 @@ public class PhoneDao {
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} 
+		close();
 	}
 
 }
