@@ -18,6 +18,7 @@ public class PhoneDao {
 	private String pw = "phonedb";
 	private String driver = "oracle.jdbc.driver.OracleDriver";
 	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	private List<PersonVo> pList = new ArrayList<PersonVo>();
 
 	private void connect() {
 		try {
@@ -48,7 +49,7 @@ public class PhoneDao {
 		}
 	}
 
-	public void select() {
+	public List<PersonVo> select() {
 		connect();
 		try {
 
@@ -69,17 +70,17 @@ public class PhoneDao {
 				String hp = rs.getString("hp");
 				String company = rs.getString("company");
 
-				System.out.println(person_id + "\t" + name + "\t" + hp + "\t" + company);
+				pList.add(new PersonVo(person_id, name, hp, company));
 			}
-			System.out.println();
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
 		close();
+		return pList;
 	}
 
-	public void search(String keyword) {
+	public List<PersonVo> search(String keyword) {
 		connect();
 		List<PersonVo> pList = new ArrayList<PersonVo>();
 		try {
@@ -113,12 +114,11 @@ public class PhoneDao {
 		    System.out.println("error:" + e);
 		} 
 		close();
-		for(PersonVo vo: pList) {
-			System.out.println(vo.getPerson_id() + "\t" + vo.getName() + "\t" + vo.getHp() + "\t" + vo.getCompany());
-		}
+		
+		return pList;
 	}
 
-	public void delete(int num) {
+	public int delete(int num) {
 		connect();
 		try {
 		    String query = "delete from person where person_id = ?";
@@ -127,15 +127,17 @@ public class PhoneDao {
 
 		    int count = pstmt.executeUpdate();
 		    
-		    System.out.println("[" + count + "건이 삭제 되었습니다.]");
+		    return count;
 
 		} catch (SQLException e) {
 		    System.out.println("error:" + e);
 		} 
 		close();
+		return 0;
 	}
 
-	public void update(PersonVo vo) {
+	public int update(PersonVo vo) {
+		
 		connect();
 		try {
 		    String query = "update person set name = ?, hp = ?, company = ? where person_id = ?";
@@ -146,16 +148,17 @@ public class PhoneDao {
 		    pstmt.setString(3, vo.getCompany());
 		    pstmt.setInt(4, vo.getPerson_id());
 		    // 4.결과처리
-		    int count = pstmt.executeUpdate();
-		    System.out.println("[" + count + "건이 수정되었습니다.]");
+		   int count = pstmt.executeUpdate();
+		   return count;
 
 		} catch (SQLException e) {
 		    System.out.println("error:" + e);
 		} 
 		close();
+		return 0;
 	}
 
-	public void insert(PersonVo vo) {
+	public int insert(PersonVo vo) {
 		connect();
 		try {
 
@@ -166,12 +169,13 @@ public class PhoneDao {
 			pstmt.setString(3, vo.getCompany());
 
 			int count = pstmt.executeUpdate();
-			System.out.println("[" + count + "건이 등록되었습니다.]");
+			return count;
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} 
 		close();
+		return 0;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.javaex.phone;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -8,6 +9,7 @@ public class PhoneApp {
 	public static void main(String[] args) {
 		
 		PhoneDao pDao = new PhoneDao();
+		List<PersonVo> pList = new ArrayList<PersonVo>();
 		
 		Scanner scan = new Scanner(System.in);
 		int num;
@@ -26,7 +28,12 @@ public class PhoneApp {
 			switch(num) {
 			case 1 :
 				System.out.println("<1.리스트>");
-				pDao.select();
+				pList.removeAll(pList);
+				pList = pDao.select();
+				for(PersonVo vo1: pList) {
+					System.out.println(vo1.getPerson_id() + "\t" + vo1.getName() + "\t" + vo1.getHp() + "\t" + vo1.getCompany());
+				}
+				System.out.println();
 				break;
 			case 2:
 				System.out.println("<2.등록>");
@@ -42,7 +49,8 @@ public class PhoneApp {
 				
 				PersonVo vo = new PersonVo(pName, pHp, pCompany);
 				
-				pDao.insert(vo);
+				int count2 = pDao.insert(vo);
+				System.out.println("[" + count2 + "건이 등록 되었습니다.]");
 				break;
 			case 3:
 				System.out.println("<3.수정>");
@@ -60,20 +68,27 @@ public class PhoneApp {
 				String updateCompany = scan.next();
 				
 				PersonVo vo1 = new PersonVo(updateNum, updateName, updateHp, updateCompany);
-				pDao.update(vo1);
+				int count3 = pDao.update(vo1);
+				System.out.println("[" + count3 + "건이 수정 되었습니다.]");
 				break;
 			case 4:
 				System.out.println("<4.삭제>");
 				System.out.print(">번호 :");
 				int deleteNum = scan.nextInt();
 				
-				pDao.delete(deleteNum);
+				int count4 = pDao.delete(deleteNum);
+				System.out.println("[" + count4 + "건이 삭제 되었습니다.]");
 				break;
 			case 5:
 				System.out.println("<5.검색>");
 				System.out.print("검색어 > ");
 				String keyword = scan.next();
-				pDao.search(keyword);
+				pList.removeAll(pList);
+				pList = pDao.search(keyword);
+				
+				for(PersonVo vo5: pList) {
+					System.out.println(vo5.getPerson_id() + "\t" + vo5.getName() + "\t" + vo5.getHp() + "\t" + vo5.getCompany());
+				}
 				break;
 			case 6:
 				button = false;
