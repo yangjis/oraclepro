@@ -28,7 +28,6 @@ public class PhoneApp {
 			switch(num) {
 			case 1 :
 				System.out.println("<1.리스트>");
-				pList.removeAll(pList);
 				pList = pDao.select();
 				for(PersonVo vo1: pList) {
 					System.out.println(vo1.getPerson_id() + "\t" + vo1.getName() + "\t" + vo1.getHp() + "\t" + vo1.getCompany());
@@ -83,7 +82,6 @@ public class PhoneApp {
 				System.out.println("<5.검색>");
 				System.out.print("검색어 > ");
 				String keyword = scan.next();
-				pList.removeAll(pList);
 				pList = pDao.search(keyword);
 				
 				for(PersonVo vo5: pList) {

@@ -62,7 +62,8 @@ public class PhoneDao {
 					"order by person_id asc";
 
 			pstmt = conn.prepareStatement(query);
-
+			
+			pList.removeAll(pList);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				int person_id = rs.getInt("person_id");
@@ -82,7 +83,6 @@ public class PhoneDao {
 
 	public List<PersonVo> search(String keyword) {
 		connect();
-		List<PersonVo> pList = new ArrayList<PersonVo>();
 		try {
 		    String query ="";
 		    query = " select person_id, "+
@@ -102,6 +102,7 @@ public class PhoneDao {
 		    pstmt.setString(3, '%' + keyword + '%' );
 		    
 		    rs = pstmt.executeQuery();
+		    pList.removeAll(pList);
 		    while(rs.next()) {
 		    	int person_id = rs.getInt("person_id");
 		    	String name = rs.getString("name");
