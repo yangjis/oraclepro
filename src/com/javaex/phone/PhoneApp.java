@@ -13,6 +13,7 @@ public class PhoneApp {
 		
 		Scanner scan = new Scanner(System.in);
 		int num;
+		int count;
 		
 		System.out.println("**************************************");
 		System.out.println("*            전화번호 관리 플로그램               *");
@@ -48,8 +49,8 @@ public class PhoneApp {
 				
 				PersonVo vo = new PersonVo(pName, pHp, pCompany);
 				
-				int count2 = pDao.insert(vo);
-				System.out.println("[" + count2 + "건이 등록 되었습니다.]");
+				count = pDao.insert(vo);
+				System.out.println("[" + count + "건이 등록 되었습니다.]");
 				break;
 			case 3:
 				System.out.println("<3.수정>");
@@ -67,16 +68,16 @@ public class PhoneApp {
 				String updateCompany = scan.next();
 				
 				PersonVo vo1 = new PersonVo(updateNum, updateName, updateHp, updateCompany);
-				int count3 = pDao.update(vo1);
-				System.out.println("[" + count3 + "건이 수정 되었습니다.]");
+				count = pDao.update(vo1);
+				System.out.println("[" + count + "건이 수정 되었습니다.]");
 				break;
 			case 4:
 				System.out.println("<4.삭제>");
 				System.out.print(">번호 :");
 				int deleteNum = scan.nextInt();
 				
-				int count4 = pDao.delete(deleteNum);
-				System.out.println("[" + count4 + "건이 삭제 되었습니다.]");
+				count = pDao.delete(deleteNum);
+				System.out.println("[" + count + "건이 삭제 되었습니다.]");
 				break;
 			case 5:
 				System.out.println("<5.검색>");
@@ -93,11 +94,14 @@ public class PhoneApp {
 				break;
 			default:
 				System.out.println("[다시 입력해주세요.]");
+				break;
 			}
 		}
 		System.out.println("**************************************");
 		System.out.println("*             감사합니다.               *");
 		System.out.println("**************************************");
+		
+		scan.close();
 
 	}
 }
